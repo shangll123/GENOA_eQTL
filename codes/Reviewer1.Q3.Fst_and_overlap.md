@@ -507,11 +507,11 @@ sum(common_table$beta.x*common_table$beta.y>0)
 ```R
 
 
-# pathAA="/net/mulan/home/shanglu/GENOA/analysis/AA/eqtlmapping"
-# load(paste0(pathAA,"/AA_table.RData"))
-# pathEA="/net/mulan/home/shanglu/GENOA/analysis/EA/eqtlmapping"
-# load(paste0(pathEA,"/EA_table.RData"))
-# load("/net/mulan/home/shanglu/GENOA/analysis/compare/Fst_result.RData")
+ pathAA="/net/mulan/home/shanglu/GENOA/analysis/AA/eqtlmapping"
+ load(paste0(pathAA,"/AA_table.RData"))
+ pathEA="/net/mulan/home/shanglu/GENOA/analysis/EA/eqtlmapping"
+ load(paste0(pathEA,"/EA_table.RData"))
+ load("/net/mulan/home/shanglu/GENOA/analysis/compare/Fst_result.RData")
 
 AA_thr = 6.245907e-05
 EA_thr = 0.0001385504
@@ -667,7 +667,7 @@ summarise(meanFst = mean(Fst),
           minFst = min(Fst),
           maxFst = max(Fst))
           
-> table(Fst_result$TYPE)
+table(Fst_result$TYPE)
 
  AA specific common eSNPs  EA specific    non eSNPs 
       197188       101285       216653     24391818 
@@ -741,6 +741,15 @@ wilcox.test(common_fst , noneSNP_fst, alternative = "greater")$p.value
 [1] 1.604164e-40
 > wilcox.test(common_fst , noneSNP_fst, alternative = "greater")$p.value
 [1] 0
+
+wilcox.test(common_fst , c(AA_spec_fst,EA_spec_fst), alternative = "two.sided")$p.value
+[1] 4.737264e-28
+
+wilcox.test(common_fst , c(AA_spec_fst,EA_spec_fst), alternative = "less")$p.value
+[1] 2.368632e-28
+
+wilcox.test(common_fst , c(AA_spec_fst,EA_spec_fst), alternative = "greater")$p.value
+[1] 1
 
 
 library(clinfun)
