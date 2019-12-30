@@ -420,6 +420,40 @@ dev.off()
 		labs(title="European American",x="Number of independent eQTLs", y = "Number of eGenes")
 		dev.off()
 
+load("/net/mulan/home/shanglu/GENOA/analysis/conditional/gene_anno_AA_eGene.RData")
+load("/net/mulan/home/shanglu/GENOA/analysis/conditional/gene_anno_EA_eGene.RData")
+		pdf("Fig4_hist_indep_eqtl_AA_update.pdf")
+		num = c( table((gene_anno_AA_eGene$indep_snp)))
+		xaxis = c(1:9)
+		dat = data.frame(xaxis, num)
+		dat$xaxis = as.factor(dat$xaxis)
+		ggplot(dat, aes(x=xaxis,y=num)) + 
+		geom_bar(alpha=0.8, fill = "cornflowerblue",stat="identity", position=position_dodge()) + 
+		geom_text(aes(label=num), vjust=-0.8, color="black",
+            position = position_dodge(0.9), size=6)+
+		theme_bw(base_size = 22) + 
+		ylim(0,3800)+
+		labs(title="African American",x="Number of independent eQTLs", y = "Number of eGenes")
+		dev.off()
+		
+		pdf("Fig4_hist_indep_eqtl_EA_update.pdf")
+		num = c( table((gene_anno_EA_eGene$indep_snp)),0,0)
+		xaxis = c(1:9)
+		dat = data.frame(xaxis, num)
+		dat$xaxis = as.factor(dat$xaxis)
+		ggplot(dat, aes(x=xaxis,y=num)) + 
+		geom_bar(alpha=0.8, fill = "cornflowerblue",stat="identity", position=position_dodge()) + 
+		geom_text(aes(label=num), vjust=-0.8, color="black",
+            position = position_dodge(0.9), size=6)+
+		theme_bw(base_size = 22) + 
+		ylim(0,3800)+
+		labs(title="European American",x="Number of independent eQTLs", y = "Number of eGenes")
+		dev.off()
+		
+
+	    
+	    
+	    
 #---------------
 # 4B & 4D
 #---------------
