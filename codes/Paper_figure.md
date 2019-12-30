@@ -345,12 +345,12 @@ additive = c(gene_AA_anno_use$PVE_bslmm_combined, gene_AA_anno_use$PVE_bslmm_com
 effect = c(cis, trans, additive)
 effect_type = c(rep("cis-PVE",length(cis)), rep("trans-PVE",length(trans)), rep("total PVE",length(additive)))
 effect_type <- factor(effect_type,levels = c('cis-PVE','trans-PVE','total PVE'),ordered = TRUE)
-tmp = c(rep("All genes", length(gene_AA_anno_use$por_cis_combined)), rep("non eQTL genes", sum(gene_AA_anno_use$eGene==0)),rep("eQTL genes", sum(gene_AA_anno_use$eGene==1)))
-effect_class = factor(rep(tmp, 3),levels = c('All genes','non eQTL genes','eQTL genes'),ordered = TRUE)
+tmp = c(rep("All genes", length(gene_AA_anno_use$por_cis_combined)), rep("non cis-eQTL genes", sum(gene_AA_anno_use$eGene==0)),rep("cis-eQTL genes", sum(gene_AA_anno_use$eGene==1)))
+effect_class = factor(rep(tmp, 3),levels = c('All genes','non cis-eQTL genes','cis-eQTL genes'),ordered = TRUE)
 dat = data.frame(effect,effect_type,effect_class)
 
 
-pdf(paste0("Fig3_PVE_combined_AA.pdf"),width=18, height=12)
+pdf(paste0("Fig3_PVE_combined_AA_update.pdf"),width=18, height=12)
 ggplot(dat, aes(x = effect_class, y = effect,fill = effect_type)) +
 scale_y_continuous(name = "Percent variance explained",breaks = seq(0, 1, 0.1),limits=c(0, 1)) +
 scale_x_discrete(name = "") + 
@@ -372,12 +372,12 @@ additive = c(gene_EA_anno_use$PVE_bslmm_combined, gene_EA_anno_use$PVE_bslmm_com
 effect = c(cis, trans, additive)
 effect_type = c(rep("cis-PVE",length(cis)), rep("trans-PVE",length(trans)), rep("total PVE",length(additive)))
 effect_type <- factor(effect_type,levels = c('cis-PVE','trans-PVE','total PVE'),ordered = TRUE)
-tmp = c(rep("All genes", length(gene_EA_anno_use$por_cis_combined)), rep("non eQTL genes", sum(gene_EA_anno_use$eGene==0)),rep("eQTL genes", sum(gene_EA_anno_use$eGene==1)))
-effect_class = factor(rep(tmp, 3),levels = c('All genes','non eQTL genes','eQTL genes'),ordered = TRUE)
+tmp = c(rep("All genes", length(gene_EA_anno_use$por_cis_combined)), rep("non cis-eQTL genes", sum(gene_EA_anno_use$eGene==0)),rep("cis-eQTL genes", sum(gene_EA_anno_use$eGene==1)))
+effect_class = factor(rep(tmp, 3),levels = c('All genes','non cis-eQTL genes','cis-eQTL genes'),ordered = TRUE)
 dat = data.frame(effect,effect_type,effect_class)
 
 library(ggplot2)
-pdf(paste0("Fig3_PVE_combined_EA.pdf"),width=18, height=12)
+pdf(paste0("Fig3_PVE_combined_EA_update.pdf"),width=18, height=12)
 ggplot(dat, aes(x = effect_class, y = effect,fill = effect_type)) +
 scale_y_continuous(name = "Percent variance explained",breaks = seq(0, 1, 0.1),limits=c(0, 1)) +
 scale_x_discrete(name = "") + 
@@ -808,8 +808,8 @@ additive = c(gene_AA_anno_use_tmp$PVE_bslmm_combined, gene_AA_anno_use_tmp$PVE_b
 effect = c(cis, trans, additive)
 effect_type = c(rep("cis-PVE",length(cis)), rep("trans-PVE",length(trans)), rep("total PVE",length(additive)))
 effect_type <- factor(effect_type,levels = c('cis-PVE','trans-PVE','total PVE'),ordered = TRUE)
-tmp = c(rep("All genes", length(gene_AA_anno_use_tmp$por_cis_combined)), rep("non eQTL genes", sum(gene_AA_anno_use_tmp$eGene==0)),rep("eQTL genes", sum(gene_AA_anno_use_tmp$eGene==1)))
-effect_class = factor(rep(tmp, 3),levels = c('All genes','non eQTL genes','eQTL genes'),ordered = TRUE)
+tmp = c(rep("All genes", length(gene_AA_anno_use_tmp$por_cis_combined)), rep("non cis-eQTL genes", sum(gene_AA_anno_use_tmp$eGene==0)),rep("cis-eQTL genes", sum(gene_AA_anno_use_tmp$eGene==1)))
+effect_class = factor(rep(tmp, 3),levels = c('All genes','non cis-eQTL genes','cis-eQTL genes'),ordered = TRUE)
 dat = data.frame(effect,effect_type,effect_class)
 pdf(paste0("Fig3_PVE_combined_AA_signif_FDR0.1.pdf"),width=18, height=12)
 ggplot(dat, aes(x = effect_class, y = effect,fill = effect_type)) +
@@ -841,8 +841,8 @@ additive = c(gene_AA_anno_use_tmp$PVE_bslmm_combined, gene_AA_anno_use_tmp$PVE_b
 effect = c(cis, trans, additive)
 effect_type = c(rep("cis-PVE",length(cis)), rep("trans-PVE",length(trans)), rep("total PVE",length(additive)))
 effect_type <- factor(effect_type,levels = c('cis-PVE','trans-PVE','total PVE'),ordered = TRUE)
-tmp = c(rep("All genes", length(gene_AA_anno_use_tmp$por_cis_combined)), rep("non eQTL genes", sum(gene_AA_anno_use_tmp$eGene==0)),rep("eQTL genes", sum(gene_AA_anno_use_tmp$eGene==1)))
-effect_class = factor(rep(tmp, 3),levels = c('All genes','non eQTL genes','eQTL genes'),ordered = TRUE)
+tmp = c(rep("All genes", length(gene_AA_anno_use_tmp$por_cis_combined)), rep("non cis-eQTL genes", sum(gene_AA_anno_use_tmp$eGene==0)),rep("cis-eQTL genes", sum(gene_AA_anno_use_tmp$eGene==1)))
+effect_class = factor(rep(tmp, 3),levels = c('All genes','non cis-eQTL genes','cis-eQTL genes'),ordered = TRUE)
 dat = data.frame(effect,effect_type,effect_class)
 pdf(paste0("Fig3_PVE_combined_AA_signif_FDR0.05.pdf"),width=18, height=12)
 ggplot(dat, aes(x = effect_class, y = effect,fill = effect_type)) +
