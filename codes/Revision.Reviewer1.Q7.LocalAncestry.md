@@ -1181,8 +1181,12 @@ cor.test(common_eSNP_EA$p_wald, common_eSNP_EA$pval, method = "spearman")$p.valu
 [1] 0
 
 
-library(ggplot2)
-mydata = common_eSNP_EA
+
+
+
+
+
+mydata = common_table
 p = ggplot(mydata, aes(x=beta.x, y=beta.y)) +    
   geom_point(shape=19, fill="cornflowerblue", color="cornflowerblue", size=0.5)+
   #geom_smooth(method=lm, se=FALSE, fullrange=TRUE,color="tomato1")+
@@ -1193,17 +1197,73 @@ p = ggplot(mydata, aes(x=beta.x, y=beta.y)) +
   ylim(-2.1,2.1) 
 
 path_LA = "/net/mulan/home/shanglu/GENOA/data/EA/LA"
-tiff(paste0(path_LA,"/EA_eSNP_effectsize_LAvsGA.tiff"), units="in", width=10, height=10, res=150)    
+tiff(paste0(path_LA,"/EA_effectsize_LAvsGA.tiff"), units="in", width=10, height=10, res=150)    
 p
 dev.off()
 
 
 
 
+#--------------------------------------------  
+# plot -log10(p)
+#--------------------------------------------
+
+# EA
+library(ggplot2)
+mydata = common_table
+common_table$log10pGA = -log10(common_table$p_wald)
+common_table$log10pLA = -log10(common_table$pval)
+
+> summary(common_table$log10pGA)
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+  0.0000   0.1614   0.4099   1.0414   0.9120 198.8397 
+> summary(common_table$log10pLA )
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+  0.0000   0.1638   0.4171   1.0807   0.9332 207.2681 
+  
+mydata = common_table
+p = ggplot(mydata, aes(x=log10pGA, y=log10pLA)) +    
+  geom_point(shape=19, fill="cornflowerblue", color="cornflowerblue", size=0.5)+
+  #geom_smooth(method=lm, se=FALSE, fullrange=TRUE,color="tomato1")+
+  theme_bw(base_size=22)+
+  labs(title=paste0("-log10(p) in LA and GA"),
+       x="-log10(p) in GA", y = "-log10(p) in LA")+
+  xlim(0,210)+
+  ylim(0,210) 
+
+path_LA = "/net/mulan/home/shanglu/GENOA/data/EA/LA"
+tiff(paste0(path_LA,"/EA_log10p_LAvsGA.tiff"), units="in", width=10, height=10, res=150)    
+p
+dev.off()
 
 
+# AA
+library(ggplot2)
 
+common_table$log10pGA = -log10(common_table$p_wald)
+common_table$log10pLA = -log10(common_table$pval)
 
+> summary(common_table$log10pGA)
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+  0.0000   0.1532   0.3834   0.8331   0.8245 264.2144 
+> summary(common_table$log10pLA )
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+  0.0000   0.1549   0.3885   0.8564   0.8400 279.1684 
+  
+mydata = common_table
+p = ggplot(mydata, aes(x=log10pGA, y=log10pLA)) +    
+  geom_point(shape=19, fill="violet", color="violet", size=0.5)+
+  #geom_smooth(method=lm, se=FALSE, fullrange=TRUE,color="tomato1")+
+  theme_bw(base_size=22)+
+  labs(title=paste0("-log10(p) in LA and GA"),
+       x="-log10(p) in GA", y = "-log10(p) in LA")+
+  xlim(0,280)+
+  ylim(0,280) 
+
+path_LA = "/net/mulan/home/shanglu/GENOA/data/AA/LA"
+tiff(paste0(path_LA,"/AA_log10p_LAvsGAviolet.tiff"), units="in", width=10, height=10, res=150)    
+p
+dev.off()
 
 
 
