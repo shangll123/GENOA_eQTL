@@ -7,7 +7,10 @@ Most existing expression quantitative trait locus (eQTL) mapping studies have be
 
 The cis-eQTL mapping summary statistics could be found at http://xzlab.org
 
-The gene expression data used in this analysis is available at the Gene Expression Omnibus (GEO Study Accession: GSE138914(https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE138914) for AA; GSE49531 (https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE49531) for EA).
+The gene expression data used in this analysis is available at the Gene Expression Omnibus (GEO Study Accession: [GSE138914](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE138914) for AA; [GSE49531] (https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE49531) for EA).
+
+
+
 
 The SNP data is available from the Database of Genotypes and Phenotypes (dbGaP Study Accession: phs001238.v2.p1). 
 
