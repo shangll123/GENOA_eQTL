@@ -5,7 +5,7 @@ Most existing expression quantitative trait locus (eQTL) mapping studies have be
 
 # Data Availability
 
-The cis-eQTL mapping summary statistics could be found at http://xzlab.org
+The cis-eQTL mapping summary statistics could be found at http://xzlab.org/data.html
 
 The gene expression data used in this analysis is available at the Gene Expression Omnibus (GEO Study Accession: [GSE138914](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE138914) for AA; [GSE49531](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE49531) for EA).
 
