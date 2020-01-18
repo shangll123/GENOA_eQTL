@@ -180,11 +180,13 @@ Common = gene_anno_common_eGene$AA_phylop
 AA_unique = gene_anno_AA_unique$AA_phylop
 EA_unique = gene_anno_EA_unique$EA_phylop
 Phylop_score= c(Background,Common,EA_unique,AA_unique)
-Class = factor(c(rep("Background",length(Background)),rep("Common",length(Common)),rep("EA_unique",length(EA_unique)),rep("AA_unique",length(AA_unique))),levels = c("Background","EA_unique","AA_unique","Common"),order=T)
+Class = factor(c(rep("Background",length(Background)),rep("Common",length(Common)),rep("EA unique",length(EA_unique)),rep("AA unique",length(AA_unique))),levels = c("Background","EA unique","AA unique","Common"),order=T)
 dat = data.frame(Phylop_score,Class)
 
+library(ggplot2)
+
 # violin
-pdf("Fig2_phylop_violin.pdf")
+pdf("Fig2_phylop_violin_update.pdf")
 dp <- ggplot(dat, aes(x=Class, y=Phylop_score)) + 
   geom_violin(trim=FALSE)+
   geom_boxplot(width=0.1, fill="white")+
@@ -193,7 +195,7 @@ dp + scale_fill_brewer(palette="RdBu") + theme_bw(base_size = 22)
 dev.off()
 
 # box
-pdf("Fig2_phylop_box.pdf")
+pdf("Fig2_phylop_box_update.pdf")
 ggplot(dat, aes(x=Class, y=Phylop_score)) +
     geom_boxplot(alpha=0.4) +
     stat_summary(fun.y=mean, geom="point", shape=20, size=5, color="red", fill="red") +
@@ -260,11 +262,11 @@ library(qvalue)
 library(data.table)
 library(dplyr)
 
-# pathAA="/net/mulan/home/shanglu/GENOA/analysis/AA/eqtlmapping"
-# load(paste0(pathAA,"/AA_table.RData"))
-# pathEA="/net/mulan/home/shanglu/GENOA/analysis/EA/eqtlmapping"
-# load(paste0(pathEA,"/EA_table.RData"))
-# load("/net/mulan/home/shanglu/GENOA/analysis/compare/Fst_result.RData")
+ pathAA="/net/mulan/home/shanglu/GENOA/analysis/AA/eqtlmapping"
+ load(paste0(pathAA,"/AA_table.RData"))
+ pathEA="/net/mulan/home/shanglu/GENOA/analysis/EA/eqtlmapping"
+ load(paste0(pathEA,"/EA_table.RData"))
+ load("/net/mulan/home/shanglu/GENOA/analysis/compare/Fst_result.RData")
 
 AA_thr = 6.245907e-05
 EA_thr = 0.0001385504
