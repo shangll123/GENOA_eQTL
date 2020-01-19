@@ -794,7 +794,7 @@ dev.off()
 	  
 
 
-# Fig S4: significant PVE genes 
+# Fig S11: significant PVE genes 
 ```R
 #------------------------------
 # only use significant genes
@@ -822,6 +822,7 @@ effect_type <- factor(effect_type,levels = c('cis-PVE','trans-PVE','total PVE'),
 tmp = c(rep("All genes", length(gene_AA_anno_use_tmp$por_cis_combined)), rep("non cis-eQTL genes", sum(gene_AA_anno_use_tmp$eGene==0)),rep("cis-eQTL genes", sum(gene_AA_anno_use_tmp$eGene==1)))
 effect_class = factor(rep(tmp, 3),levels = c('All genes','non cis-eQTL genes','cis-eQTL genes'),ordered = TRUE)
 dat = data.frame(effect,effect_type,effect_class)
+
 pdf(paste0("Fig3_PVE_combined_AA_signif_FDR0.1.pdf"),width=18, height=12)
 ggplot(dat, aes(x = effect_class, y = effect,fill = effect_type)) +
 scale_y_continuous(name = "Percent variance explained",breaks = seq(0, 1, 0.1),limits=c(0, 1)) +
@@ -855,13 +856,14 @@ effect_type <- factor(effect_type,levels = c('cis-PVE','trans-PVE','total PVE'),
 tmp = c(rep("All genes", length(gene_AA_anno_use_tmp$por_cis_combined)), rep("non cis-eQTL genes", sum(gene_AA_anno_use_tmp$eGene==0)),rep("cis-eQTL genes", sum(gene_AA_anno_use_tmp$eGene==1)))
 effect_class = factor(rep(tmp, 3),levels = c('All genes','non cis-eQTL genes','cis-eQTL genes'),ordered = TRUE)
 dat = data.frame(effect,effect_type,effect_class)
-pdf(paste0("Fig3_PVE_combined_AA_signif_FDR0.05.pdf"),width=18, height=12)
+
+pdf(paste0("Fig3_PVE_combined_AA_signif_FDR0.05_update.pdf"),width=18, height=12)
 ggplot(dat, aes(x = effect_class, y = effect,fill = effect_type)) +
 scale_y_continuous(name = "Percent variance explained",breaks = seq(0, 1, 0.1),limits=c(0, 1)) +
 scale_x_discrete(name = "") + 
 geom_violin(trim = FALSE, alpha=0.5, scale = "width",show.legend = FALSE) + 
 geom_boxplot( aes(x = effect_class, y = effect,fill = effect_type),width = 0.2,position=position_dodge(0.9)) +
-ggtitle("African American (FDR<=0.05)") +
+ggtitle("African American (FDR<0.05)") +
 theme_bw(base_size = 30) +
 theme(plot.title = element_text(size = 40,face = "bold"),text = element_text(size = 40),axis.title = element_text(face="bold"),axis.text.x=element_text(size = 30)) +
 scale_fill_brewer(palette = "Accent")+
@@ -946,13 +948,14 @@ effect_type <- factor(effect_type,levels = c('cis-PVE','trans-PVE','total PVE'),
 tmp = c(rep("All genes", length(gene_EA_anno_use_tmp$por_cis_combined)), rep("non eQTL genes", sum(gene_EA_anno_use_tmp$eGene==0)),rep("eQTL genes", sum(gene_EA_anno_use_tmp$eGene==1)))
 effect_class = factor(rep(tmp, 3),levels = c('All genes','non eQTL genes','eQTL genes'),ordered = TRUE)
 dat = data.frame(effect,effect_type,effect_class)
-pdf(paste0("Fig3_PVE_combined_EA_signif_FDR0.05.pdf"),width=18, height=12)
+
+pdf(paste0("Fig3_PVE_combined_EA_signif_FDR0.05_update.pdf"),width=18, height=12)
 ggplot(dat, aes(x = effect_class, y = effect,fill = effect_type)) +
 scale_y_continuous(name = "Percent variance explained",breaks = seq(0, 1, 0.1),limits=c(0, 1)) +
 scale_x_discrete(name = "") + 
 geom_violin(trim = FALSE, alpha=0.5, scale = "width",show.legend = FALSE) + 
 geom_boxplot( aes(x = effect_class, y = effect,fill = effect_type),width = 0.2,position=position_dodge(0.9)) +
-ggtitle("European American (FDR<=0.05)") +
+ggtitle("European American (FDR<0.05)") +
 theme_bw(base_size = 30) +
 theme(plot.title = element_text(size = 40,face = "bold"),text = element_text(size = 40),axis.title = element_text(face="bold"),axis.text.x=element_text(size = 30)) +
 scale_fill_brewer(palette = "Accent")+
