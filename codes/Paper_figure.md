@@ -150,6 +150,10 @@ Figure 1D
 ################################################################
 # Conservation score violin
 ################################################################
+load("/net/mulan/home/shanglu/GENOA/data/AA/gene_AA_anno_use.RData")
+load("/net/mulan/home/shanglu/GENOA/data/EA/gene_EA_anno_use.RData")
+load("/net/mulan/home/shanglu/GENOA/analysis/conditional/gene_anno_AA_eGene.RData")
+load("/net/mulan/home/shanglu/GENOA/analysis/conditional/gene_anno_EA_eGene.RData")
 
 
 gene_anno_common_eGene = merge(gene_anno_AA_eGene,gene_anno_EA_eGene,by = "GENE")
@@ -185,14 +189,7 @@ dat = data.frame(Phylop_score,Class)
 
 library(ggplot2)
 
-# violin
-pdf("Fig2_phylop_violin_update.pdf")
-dp <- ggplot(dat, aes(x=Class, y=Phylop_score)) + 
-  geom_violin(trim=FALSE)+
-  geom_boxplot(width=0.1, fill="white")+
-  labs(title="",x="", y = "Phylop score")
-dp + scale_fill_brewer(palette="RdBu") + theme_bw(base_size = 22)
-dev.off()
+
 
 # box
 pdf("Fig2_phylop_box_update.pdf")
@@ -210,18 +207,10 @@ Common = gene_anno_common_eGene$AA_phastcon
 AA_unique = gene_anno_AA_unique$AA_phastcon
 EA_unique = gene_anno_EA_unique$EA_phastcon
 phastcon_score= c(Background,Common,EA_unique,AA_unique)
-Class = factor(c(rep("Background",length(Background)),rep("Common",length(Common)),rep("EA_unique",length(EA_unique)),rep("AA_unique",length(AA_unique))),levels = c("Background","EA_unique","AA_unique","Common"),order=T)
+Class = factor(c(rep("Background",length(Background)),rep("Common",length(Common)),rep("EA unique",length(EA_unique)),rep("AA unique",length(AA_unique))),levels = c("Background","EA unique","AA unique","Common"),order=T)
 dat = data.frame(phastcon_score,Class)
 
-pdf("Fig2_phastcon_violin.pdf")
-dp <- ggplot(dat, aes(x=Class, y=phastcon_score)) + 
-  geom_violin(trim=FALSE)+
-  geom_boxplot(width=0.1, fill="white")+
-  labs(title="",x="", y = "Phastcon score")
-dp + scale_fill_brewer(palette="RdBu") + theme_bw(base_size = 22)
-dev.off()
-
-pdf("Fig2_phastcon_box.pdf")
+pdf("Fig2_phastcon_box_update.pdf")
 ggplot(dat, aes(x=Class, y=phastcon_score)) +
     geom_boxplot(alpha=0.4) +
     stat_summary(fun.y=mean, geom="point", shape=20, size=5, color="red", fill="red") +
@@ -236,18 +225,11 @@ Common = na.omit(gene_anno_common_eGene$dNdS_ratio.x)
 AA_unique = na.omit(gene_anno_AA_unique$dNdS_ratio)
 EA_unique = na.omit(gene_anno_EA_unique$dNdS_ratio)
 dNdS_ratio_score= c(Background,Common,EA_unique,AA_unique)
-Class = factor(c(rep("Background",length(Background)),rep("Common",length(Common)),rep("EA_unique",length(EA_unique)),rep("AA_unique",length(AA_unique))),levels = c("Background","EA_unique","AA_unique","Common"),order=T)
+Class = factor(c(rep("Background",length(Background)),rep("Common",length(Common)),rep("EA unique",length(EA_unique)),rep("AA unique",length(AA_unique))),levels = c("Background","EA unique","AA unique","Common"),order=T)
 dat = data.frame(dNdS_ratio_score,Class)
 
-pdf("Fig2_dNdS_violin.pdf")
-dp <- ggplot(dat, aes(x=Class, y=dNdS_ratio_score)) + 
-  geom_violin(trim=FALSE)+
-  geom_boxplot(width=0.1, fill="white")+
-  labs(title="",x="", y = "dN/dS score")
-dp + scale_fill_brewer(palette="RdBu") + theme_bw(base_size = 22)
-dev.off()
 
-pdf("Fig2_dNdS_box.pdf")
+pdf("Fig2_dNdS_box_update.pdf")
 ggplot(dat, aes(x=Class, y=dNdS_ratio_score)) +
     geom_boxplot(alpha=0.4) +
     stat_summary(fun.y=mean, geom="point", shape=20, size=5, color="red", fill="red") +
@@ -281,37 +263,42 @@ EA_specific = unique(EA_table_subset[-which(EA_table_subset$rs %in% common_signi
 noeSNP = intersect(AA_table[AA_table$signif==0,]$rs,EA_table[EA_table$signif==0,]$rs)
 
 Fst_result$TYPE = "non eSNPs"
-Fst_result$TYPE[which(Fst_result$SNP  %in% AA_specific)] = "AA specific"
-Fst_result$TYPE[which(Fst_result$SNP  %in% EA_specific)] = "EA specific"
-Fst_result$TYPE[which(Fst_result$SNP  %in% common_signif_rs)] = "common eSNPs"
+Fst_result$TYPE[which(Fst_result$SNP  %in% AA_specific)] = "AA unique"
+Fst_result$TYPE[which(Fst_result$SNP  %in% EA_specific)] = "EA unique"
+Fst_result$TYPE[which(Fst_result$SNP  %in% common_signif_rs)] = "Common"
 
 Fst_result_result = Fst_result %>%  group_by(TYPE) %>%
 summarise(meanFst = mean(Fst), 
           medianFst = median(Fst),
           minFst = min(Fst),
           maxFst = max(Fst))
-table(Fst_result$TYPE)
-AA specific common eSNPs  EA specific    non eSNPs 
-      197188       101285       216653     24391818 
+> table(Fst_result$TYPE)
+
+AA unique    Common EA unique non eSNPs 
+   197188    101285    216653  24391818 
       
- > Fst_result_result
+> Fst_result_result
 # A tibble: 4 x 5
-  TYPE         meanFst medianFst minFst maxFst
-  <chr>          <dbl>     <dbl>  <dbl>  <dbl>
-1 AA specific   0.0895   0.0559       0  0.750
-2 common eSNPs  0.0888   0.0472       0  0.654
-3 EA specific   0.0790   0.0440       0  0.694
-4 non eSNPs     0.0338   0.00902      0  0.807
+  TYPE      meanFst medianFst minFst maxFst
+  <chr>       <dbl>     <dbl>  <dbl>  <dbl>
+1 AA unique  0.0895   0.0559       0  0.750
+2 Common     0.0888   0.0472       0  0.654
+3 EA unique  0.0790   0.0440       0  0.694
+4 non eSNPs  0.0338   0.00902      0  0.807
 
 Fst = Fst_result$Fst
-Class = factor(Fst_result$TYPE,
-levels = c("non eSNPs","AA specific","EA specific","common eSNPs"),order=T)
+Class = factor(Fst_result$TYPE,levels = c("non eSNPs","AA unique","EA unique","Common"),order=T)
 
 dat = data.frame(Fst,Class)
 
 library(ggplot2)
 
-tiff(paste0("/net/mulan/home/shanglu/GENOA/analysis/figure/Fig2D_Fst.tiff"), units="in", width=5, height=5, res=150)
+# change order 
+Fst = Fst_result$Fst
+Class = factor(Fst_result$TYPE,levels = c("non eSNPs","EA unique","AA unique","Common"),order=T)
+dat = data.frame(Fst,Class)
+library(ggplot2)
+tiff(paste0("/net/mulan/home/shanglu/GENOA/analysis/figure/Fig2D_Fst_update_order.tiff"), units="in", width=5, height=5, res=150)
 ggplot(dat, aes(x=Class, y=Fst)) +
     geom_boxplot(alpha=0.5,fill="white") +
     ylim(0,1)+
@@ -321,18 +308,6 @@ ggplot(dat, aes(x=Class, y=Fst)) +
 dev.off()
 
 
-dat = data.frame(Fst,Class)
-dat$logFst = log10(dat$Fst + 1)
-tiff(paste0("/net/mulan/home/shanglu/GENOA/analysis/figure/Fig2D_Fst_log10plus1.tiff"), units="in", width=5, height=5, res=150)
-ggplot(dat, aes(x=Class, y=logFst)) +
-    geom_boxplot(alpha=0.5,fill="white") +
-    stat_summary(fun.y=mean, geom="point", shape=20, size=5, color="red", fill="red") +
-    theme(legend.position="none") +theme_bw(base_size = 22)+
-    scale_fill_brewer(palette="Set3")+labs(title="Fst",x="", y = "log10(Fst+1)")
-dev.off()
-
-
- 
 ```
 
 # Figure 3: PVE
