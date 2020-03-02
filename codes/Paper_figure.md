@@ -119,7 +119,7 @@ ggplot(common_table_eSNP, aes(beta.x, beta.y)) +
 geom_point(size=0.5,color = "cornflowerblue")+
 labs(x = "Effect size in African American", y = "Effect size in European American")+
 geom_smooth(method='lm',formula=y~x,color="red")+
-theme_bw(base_size = 22)+
+theme_classic(base_size = 18)+
 ylim(-2,2)+
 xlim(-2,2)
 dev.off()
@@ -197,7 +197,7 @@ ggplot(dat, aes(x=Class, y=Phylop_score)) +
     geom_boxplot(alpha=0.4) +
     stat_summary(fun.y=mean, geom="point", shape=20, size=5, color="red", fill="red") +
     theme(legend.position="none") +theme_bw(base_size = 22)+
-    scale_fill_brewer(palette="Set3")+labs(title="Phylop score",x="", y = "Phylop score")
+    scale_fill_brewer(palette="Set3")+labs(title="phyloP score",x="", y = "phyloP score")
 dev.off()
 
 
@@ -215,7 +215,7 @@ ggplot(dat, aes(x=Class, y=phastcon_score)) +
     geom_boxplot(alpha=0.4) +
     stat_summary(fun.y=mean, geom="point", shape=20, size=5, color="red", fill="red") +
     theme(legend.position="none") +theme_bw(base_size = 22)+
-    scale_fill_brewer(palette="Set3")+labs(title="Phastcon score",x="", y = "Phastcon score")
+    scale_fill_brewer(palette="Set3")+labs(title="phastCons score",x="", y = "phastCons score")
 dev.off()
 
 
@@ -327,9 +327,9 @@ effect_class = factor(rep(tmp, 3),levels = c('All genes','non cis-eQTL genes','c
 dat = data.frame(effect,effect_type,effect_class)
 
 
-pdf(paste0("Fig3_PVE_combined_AA_update.pdf"),width=18, height=12)
+pdf(paste0("Fig3_PVE_combined_AA_update_Mar2.pdf"),width=18, height=12)
 ggplot(dat, aes(x = effect_class, y = effect,fill = effect_type)) +
-scale_y_continuous(name = "Percent variance explained",breaks = seq(0, 1, 0.1),limits=c(0, 1)) +
+scale_y_continuous(name = "Proportion of variance explained",breaks = seq(0, 1, 0.1),limits=c(0, 1)) +
 scale_x_discrete(name = "") + 
 geom_violin(trim = FALSE, alpha=0.5, scale = "width",show.legend = FALSE) + 
 geom_boxplot( aes(x = effect_class, y = effect,fill = effect_type),width = 0.2,position=position_dodge(0.9)) +
@@ -354,9 +354,9 @@ effect_class = factor(rep(tmp, 3),levels = c('All genes','non cis-eQTL genes','c
 dat = data.frame(effect,effect_type,effect_class)
 
 library(ggplot2)
-pdf(paste0("Fig3_PVE_combined_EA_update.pdf"),width=18, height=12)
+pdf(paste0("Fig3_PVE_combined_EA_update_Mar2.pdf"),width=18, height=12)
 ggplot(dat, aes(x = effect_class, y = effect,fill = effect_type)) +
-scale_y_continuous(name = "Percent variance explained",breaks = seq(0, 1, 0.1),limits=c(0, 1)) +
+scale_y_continuous(name = "Proportion of variance explained",breaks = seq(0, 1, 0.1),limits=c(0, 1)) +
 scale_x_discrete(name = "") + 
 geom_violin(trim = FALSE, alpha=0.5, scale = "width",show.legend = FALSE) + 
 geom_boxplot( aes(x = effect_class, y = effect,fill = effect_type),width = 0.2,position=position_dodge(0.9)) +
@@ -373,33 +373,14 @@ dev.off()
 # 4A & 4C
 #---------------
 
-		library(ggplot2);library(reshape2)
-
-		pdf("Fig4_hist_indep_eqtl_AA.pdf")
-		num = c( table((gene_anno_AA_eGene$indep_snp)))
-		xaxis = c(1:9)
-		dat = data.frame(xaxis, num)
-		dat$xaxis = as.factor(dat$xaxis)
-		ggplot(dat, aes(x=xaxis,y=num)) + 
-		geom_bar(alpha=0.8, fill = "cornflowerblue",stat="identity", position=position_dodge()) + 
-		theme_bw(base_size = 22) + 
-		labs(title="African American",x="Number of independent eQTLs", y = "Number of eGenes")
-		dev.off()
-		
-		pdf("Fig4_hist_indep_eqtl_EA.pdf")
-		num = c( table((gene_anno_EA_eGene$indep_snp)),0,0)
-		xaxis = c(1:9)
-		dat = data.frame(xaxis, num)
-		dat$xaxis = as.factor(dat$xaxis)
-		ggplot(dat, aes(x=xaxis,y=num)) + 
-		geom_bar(alpha=0.8, fill = "cornflowerblue",stat="identity", position=position_dodge()) + 
-		theme_bw(base_size = 22) + 
-		labs(title="European American",x="Number of independent eQTLs", y = "Number of eGenes")
-		dev.off()
-
 load("/net/mulan/home/shanglu/GENOA/analysis/conditional/gene_anno_AA_eGene.RData")
 load("/net/mulan/home/shanglu/GENOA/analysis/conditional/gene_anno_EA_eGene.RData")
-		pdf("Fig4_hist_indep_eqtl_AA_update.pdf")
+
+		library(ggplot2);library(reshape2)
+
+
+
+		pdf("Fig4_hist_indep_eqtl_AA_update_Mar2_2020.pdf",width=8, height=8)
 		num = c( table((gene_anno_AA_eGene$indep_snp)))
 		xaxis = c(1:9)
 		dat = data.frame(xaxis, num)
@@ -408,12 +389,12 @@ load("/net/mulan/home/shanglu/GENOA/analysis/conditional/gene_anno_EA_eGene.RDat
 		geom_bar(alpha=0.8, fill = "cornflowerblue",stat="identity", position=position_dodge()) + 
 		geom_text(aes(label=num), vjust=-0.8, color="black",
             position = position_dodge(0.9), size=6)+
-		theme_bw(base_size = 22) + 
+		theme_classic(base_size = 22) + 
 		ylim(0,3800)+
 		labs(title="African American",x="Number of independent eQTLs", y = "Number of eGenes")
 		dev.off()
 		
-		pdf("Fig4_hist_indep_eqtl_EA_update.pdf")
+		pdf("Fig4_hist_indep_eqtl_EA_update_Mar2_2020.pdf",width=8, height=8)
 		num = c( table((gene_anno_EA_eGene$indep_snp)),0,0)
 		xaxis = c(1:9)
 		dat = data.frame(xaxis, num)
@@ -422,15 +403,11 @@ load("/net/mulan/home/shanglu/GENOA/analysis/conditional/gene_anno_EA_eGene.RDat
 		geom_bar(alpha=0.8, fill = "cornflowerblue",stat="identity", position=position_dodge()) + 
 		geom_text(aes(label=num), vjust=-0.8, color="black",
             position = position_dodge(0.9), size=6)+
-		theme_bw(base_size = 22) + 
+		theme_classic(base_size = 22) + 
 		ylim(0,3800)+
 		labs(title="European American",x="Number of independent eQTLs", y = "Number of eGenes")
 		dev.off()
-		
-
-	    
-	    
-	    
+			    
 #---------------
 # 4B & 4D
 #---------------
@@ -441,25 +418,14 @@ cispve = gene_anno_AA_eGene$por_cis_combined
 indsnp = as.factor(gene_anno_AA_eGene$indep_snp)
 dat = data.frame(pve,cispve,indsnp)
 
-pdf("Fig4_conditional_pve_AA.pdf")
-ggplot(dat, aes(x=indsnp, y=pve)) +
-    geom_boxplot(alpha=0.8, fill="cornflowerblue") +
-    #stat_summary(fun.y=mean, geom="point", shape=20, size=5, color="red", fill="red") +
-    theme(legend.position="none") +
-    theme_bw(base_size = 22)+
-    ylim(-0.1,1)+
-    scale_fill_brewer(palette="Set3")+
-    labs(title="African American",x="Number of independent eQTLs", y = "PVE")
-dev.off()
 
 
-
-pdf("Fig4_conditional_cispve_AA.pdf")
+pdf("Fig4_conditional_cispve_AA_Mar2_2020.pdf",width=8, height=8)
 ggplot(dat, aes(x=indsnp, y=cispve)) +
     geom_boxplot(alpha=0.8, fill="cornflowerblue") +
     #stat_summary(fun.y=mean, geom="point", shape=20, size=5, color="red", fill="red") +
     theme(legend.position="none") +
-    theme_bw(base_size = 22)+
+    theme_classic(base_size = 22)+
     ylim(-0.1,1)+
     scale_fill_brewer(palette="Set3")+
     labs(title="African American",x="Number of independent eQTLs", y = "cis-PVE")
@@ -471,25 +437,13 @@ cispve = c(gene_anno_EA_eGene$por_cis_combined,-2,-2)
 indsnp = as.factor(c(gene_anno_EA_eGene$indep_snp,8,9))
 dat = data.frame(pve,cispve,indsnp)
 
-pdf("Fig4_conditional_pve_EA.pdf")
-ggplot(dat, aes(x=indsnp, y=pve)) +
-    geom_boxplot(alpha=0.8, fill="cornflowerblue") +
-    #stat_summary(fun.y=mean, geom="point", shape=20, size=5, color="red", fill="red") +
-    theme(legend.position="none") +
-    theme_bw(base_size = 22)+
-    ylim(-0.1,1)+
-    scale_fill_brewer(palette="Set3")+
-    labs(title="European American",x="Number of independent eQTLs", y = "PVE")
-dev.off()
 
-
-
-pdf("Fig4_conditional_cispve_EA.pdf")
+pdf("Fig4_conditional_cispve_EA_Mar2_2020.pdf",width=8, height=8)
 ggplot(dat, aes(x=indsnp, y=cispve)) +
     geom_boxplot(alpha=0.8, fill="cornflowerblue") +
     #stat_summary(fun.y=mean, geom="point", shape=20, size=5, color="red", fill="red") +
     theme(legend.position="none") +
-    theme_bw(base_size = 22)+
+    theme_classic(base_size = 22)+
     ylim(-0.1,1)+
     scale_fill_brewer(palette="Set3")+
     labs(title="European American",x="Number of independent eQTLs", y = "cis-PVE")
@@ -511,8 +465,11 @@ dev.off()
 
 # in AA:
 
-path_AAoutcond = "/net/mulan/home/shanglu/GENOA/analysis/conditional/output/AA"
+gene_AA_anno_eGene = gene_anno_AA_eGene
 
+path_AAoutcond = "/net/mulan/home/shanglu/GENOA/analysis/conditional/output/AA"
+load("/net/mulan/home/shanglu/GENOA/analysis/figure/gene_anno_AA_eGene.RData")
+load("/net/mulan/home/shanglu/GENOA/analysis/figure/gene_anno_EA_eGene.RData")
 eqtl_table_AA = data.frame()
 eqtl_table_AA_rs = NULL
 eqtl_table_AA_rs_label = NULL
@@ -537,21 +494,31 @@ eqtl_table_AA$eQTL_order = eqtl_table_AA$labelnew
 library(dplyr)
 mu <- eqtl_table_AA %>% group_by(eQTL_order) %>% summarize(grp.median = median(eqtl_table_AA_rs_dist_tss))
 
-pdf("Fig4_density_eqtl_AA.pdf",width=10, height=8)
+pdf("Fig4_density_eqtl_AA_Mar2_2020_nolegend.pdf",width=10, height=8)
+eqtl_table_AA2 = eqtl_table_AA[eqtl_table_AA$eqtl_table_AA_rs_dist_tss<=200,]
+ggplot(eqtl_table_AA2, aes(x = eqtl_table_AA_rs_dist_tss)) + 
+geom_density(aes(fill = eQTL_order), alpha = 0.4) + 
+geom_vline(data = mu, aes(xintercept = grp.median, color = eQTL_order), linetype = "dashed") + 
+labs(title="African American",x ="Distance to TSS(kb)")+
+theme(legend.position="none")+
+theme_classic(base_size = 22) 
+dev.off()
+
+pdf("Fig4_density_eqtl_AA_Mar2_2020_withlegend.pdf",width=10, height=8)
 eqtl_table_AA2 = eqtl_table_AA[eqtl_table_AA$eqtl_table_AA_rs_dist_tss<=200,]
 ggplot(eqtl_table_AA2, aes(x = eqtl_table_AA_rs_dist_tss)) + 
 geom_density(aes(fill = eQTL_order), alpha = 0.4) + 
 geom_vline(data = mu, aes(xintercept = grp.median, color = eQTL_order), linetype = "dashed") + 
 labs(title="African American",x ="Distance to TSS(kb)")+
 theme(legend.position="bottom")+
-theme_bw(base_size = 22) 
+theme_classic(base_size = 22) 
 dev.off()
 
 
 # in EA:
 
 path_EAoutcond = "/net/mulan/home/shanglu/GENOA/analysis/conditional/output/EA"
-
+gene_EA_anno_eGene = gene_anno_EA_eGene
 eqtl_table_EA = data.frame()
 eqtl_table_EA_rs = NULL
 eqtl_table_EA_rs_label = NULL
@@ -576,19 +543,298 @@ eqtl_table_EA$eQTL_order = eqtl_table_EA$labelnew
 library(dplyr)
 mu <- eqtl_table_EA %>% group_by(eQTL_order) %>% summarize(grp.median = median(eqtl_table_EA_rs_dist_tss))
 
-pdf("Fig4_density_eqtl_EA.pdf",width=10, height=8)
+pdf("Fig4_density_eqtl_EA_Mar2_2020.pdf",width=10, height=8)
 eqtl_table_EA2 = eqtl_table_EA[eqtl_table_EA$eqtl_table_EA_rs_dist_tss<=200,]
 ggplot(eqtl_table_EA2, aes(x = eqtl_table_EA_rs_dist_tss)) + 
 geom_density(aes(fill = eQTL_order), alpha = 0.4) + 
 geom_vline(data = mu, aes(xintercept = grp.median, color = eQTL_order), linetype = "dashed") + 
 labs(title="European American",x ="Distance to TSS(kb)")+
 theme(legend.position="bottom")+
-theme_bw(base_size = 22) 
+theme_classic(base_size = 22) 
 dev.off()
 
 
 
+
 ```
+
+# Figure 5 A&B
+```R
+path_pred = "/net/mulan/home/shanglu/GENOA/analysis/prediction"
+popname = c("AA", "EA", "AFA", "CAU", "HIS")
+popnames = c("result/result_AA_bslmm_allpairs","result/result_EA_bslmm_allpairs","AA/AA_elnet_result","EA/EA_elnet_result","AFA/AFA_elnet_1Mb_result","CAU/CAU_elnet_1Mb_result","HIS/HIS_elnet_1Mb_result" )
+
+
+popu = c("GBR", "FIN", "CEU" ,"YRI" ,"TSI")
+
+k = 0
+
+
+
+# YRI: 
+k=4
+geudat = c()
+ourpop = c()
+gene = c()
+
+
+count = 0
+for(usepop in c("AAbslmm" , "EAbslmm", "AAelnet", "EAelnet", "AFAelnet","CAUelnet","HISelnet")){
+count = count + 1
+	load(paste0(path_pred,"/",popnames[count],".RData"))
+	R2 = (result$pearson_rho_v2)^2
+	geudat = c(geudat, R2[,k])
+	ourpop = c(ourpop, rep(usepop,dim(R2)[1]))
+	gene = c(gene, rownames(R2))
+}
+dat = data.frame(geudat, ourpop,gene)
+dat$ourpop = factor(c(ourpop),levels = c("AAbslmm" , "EAbslmm", "AAelnet", "EAelnet", "AFAelnet","CAUelnet","HISelnet"),order=T)
+dat = na.omit(dat)
+
+dat$ourpop = as.character(dat$ourpop)
+AAgene = as.character(dat$gene)[which(as.character(dat$ourpop) %in% "AAelnet")] 
+AFAgene = as.character(dat$gene)[which(as.character(dat$ourpop) %in% "AFAelnet")] 
+AA_AFA_gene = intersect(AAgene,AFAgene )
+
+	pop = dat$geudat[dat$ourpop==usepop]
+	pop1 = dat$geudat[dat$ourpop=="AAelnet"][match(AA_AFA_gene, AAgene)]
+	pop2 = dat$geudat[dat$ourpop=="AFAelnet"][match(AA_AFA_gene, AFAgene)]
+
+	datt = data.frame(pop1, pop2)
+
+path="/net/mulan/home/shanglu/GENOA/analysis/figure"
+pdf(paste0(path, "/",popu[k],"_scatter_R2_1Mb_theme_classic.pdf"),width=6,height=6)
+scatterPlot <- ggplot(datt,aes(pop2, pop1)) + 
+  geom_point() + 
+  geom_abline(intercept =0 , slope = 1,color="blue")+
+  #geom_smooth(method="lm", se=TRUE, fullrange=TRUE)+
+  scale_color_manual(values = c('#999999','#E69F00')) + 
+  theme(legend.position=c(0,1), legend.justification=c(0,1))+theme_classic(base_size = 22)+
+  coord_cartesian(ylim = c(0, 1),xlim = c(0, 1))+ geom_rug()+
+  labs(  x="R2 in AFA",
+         y="R2 in AA")
+scatterPlot
+xdensity <- ggplot(datt, aes(x=pop1)) + 
+  geom_density(alpha=.5) + 
+  theme(legend.position = "none")+theme_classic(base_size = 22)
+xdensity
+# Marginal density plot of y (right panel)
+ydensity <- ggplot(datt, aes(x=pop2)) + 
+  geom_density(alpha=.5) + 
+  theme(legend.position = "none")+theme_classic(base_size = 22)
+ydensity
+dev.off() 
+
+sum(pop1>pop2)
+
+sum(pop1<pop2)
+
+> sum(pop1>pop2)
+[1] 2597
+> 
+> sum(pop1<pop2)
+[1] 1897
+
+
+# CEU
+k=3
+geudat = c()
+ourpop = c()
+gene = c()
+
+count = 0
+
+for(usepop in c("AAbslmm" , "EAbslmm", "AAelnet", "EAelnet", "AFAelnet","CAUelnet","HISelnet")){
+count = count + 1
+	load(paste0(path_pred,"/",popnames[count],".RData"))
+	R2 = (result$pearson_rho_v2)^2
+	geudat = c(geudat, R2[,k])
+	ourpop = c(ourpop, rep(usepop,dim(R2)[1]))
+	gene = c(gene, rownames(R2))
+}
+dat = data.frame(geudat, ourpop,gene)
+dat$ourpop = factor(c(ourpop),levels = c("AAbslmm" , "EAbslmm", "AAelnet", "EAelnet", "AFAelnet","CAUelnet","HISelnet"),order=T)
+dat = na.omit(dat)
+
+dat$ourpop = as.character(dat$ourpop)
+EAgene = as.character(dat$gene)[which(as.character(dat$ourpop) %in% "EAelnet")] 
+CAUgene = as.character(dat$gene)[which(as.character(dat$ourpop) %in% "CAUelnet")] 
+EA_CAU_gene = intersect(EAgene,CAUgene )
+
+	pop = dat$geudat[dat$ourpop==usepop]
+	pop1 = dat$geudat[dat$ourpop=="EAelnet"][match(EA_CAU_gene, EAgene)]
+	pop2 = dat$geudat[dat$ourpop=="CAUelnet"][match(EA_CAU_gene, CAUgene)]
+
+	datt = data.frame(pop1, pop2)
+
+path="/net/mulan/home/shanglu/GENOA/analysis/figure"
+pdf(paste0(path, "/",popu[k],"_scatter_R2_1Mb_theme_classic.pdf"),width=6,height=6)
+scatterPlot <- ggplot(datt,aes(pop2, pop1)) + 
+  geom_point() + 
+  geom_abline(intercept =0 , slope = 1,color="blue")+
+  #geom_smooth(method="lm", se=TRUE, fullrange=TRUE)+
+  scale_color_manual(values = c('#999999','#E69F00')) + 
+  theme(legend.position=c(0,1), legend.justification=c(0,1))+theme_classic(base_size = 22)+
+  coord_cartesian(ylim = c(0, 1),xlim = c(0, 1))+ geom_rug()+
+  labs(  x="R2 in CAU",
+         y="R2 in EA")
+scatterPlot
+xdensity <- ggplot(datt, aes(x=pop1)) + 
+  geom_density(alpha=.5) + 
+  theme(legend.position = "none")+theme_classic(base_size = 22)
+xdensity
+# Marginal density plot of y (right panel)
+ydensity <- ggplot(datt, aes(x=pop2)) + 
+  geom_density(alpha=.5) + 
+  theme(legend.position = "none")+theme_classic(base_size = 22)
+ydensity
+dev.off() 
+
+
+sum(pop1>pop2)
+sum(pop1<pop2)
+
+> sum(pop1>pop2)
+[1] 2594
+> sum(pop1<pop2)
+[1] 2282
+> 
+
+
+
+# GBR
+k=1
+geudat = c()
+ourpop = c()
+gene = c()
+
+count = 0
+
+for(usepop in c("AAbslmm" , "EAbslmm", "AAelnet", "EAelnet", "AFAelnet","CAUelnet","HISelnet")){
+count = count + 1
+	load(paste0(path_pred,"/",popnames[count],".RData"))
+	R2 = (result$pearson_rho_v2)^2
+	geudat = c(geudat, R2[,k])
+	ourpop = c(ourpop, rep(usepop,dim(R2)[1]))
+	gene = c(gene, rownames(R2))
+}
+dat = data.frame(geudat, ourpop,gene)
+dat$ourpop = factor(c(ourpop),levels = c("AAbslmm" , "EAbslmm", "AAelnet", "EAelnet", "AFAelnet","CAUelnet","HISelnet"),order=T)
+dat = na.omit(dat)
+
+dat$ourpop = as.character(dat$ourpop)
+EAgene = as.character(dat$gene)[which(as.character(dat$ourpop) %in% "EAelnet")] 
+CAUgene = as.character(dat$gene)[which(as.character(dat$ourpop) %in% "CAUelnet")] 
+EA_CAU_gene = intersect(EAgene,CAUgene )
+
+	pop = dat$geudat[dat$ourpop==usepop]
+	pop1 = dat$geudat[dat$ourpop=="EAelnet"][match(EA_CAU_gene, EAgene)]
+	pop2 = dat$geudat[dat$ourpop=="CAUelnet"][match(EA_CAU_gene, CAUgene)]
+
+	datt = data.frame(pop1, pop2)
+
+path="/net/mulan/home/shanglu/GENOA/analysis/figure"
+pdf(paste0(path, "/",popu[k],"_scatter_R2_1Mb_theme_classic.pdf"),width=6,height=6)
+scatterPlot <- ggplot(datt,aes(pop2, pop1)) + 
+  geom_point() + 
+  geom_abline(intercept =0 , slope = 1,color="blue")+
+  #geom_smooth(method="lm", se=TRUE, fullrange=TRUE)+
+  scale_color_manual(values = c('#999999','#E69F00')) + 
+  theme(legend.position=c(0,1), legend.justification=c(0,1))+theme_classic(base_size = 22)+
+  coord_cartesian(ylim = c(0, 1),xlim = c(0, 1))+ geom_rug()+
+  labs(  x="R2 in CAU",
+         y="R2 in EA")
+scatterPlot
+xdensity <- ggplot(datt, aes(x=pop1)) + 
+  geom_density(alpha=.5) + 
+  theme(legend.position = "none")+theme_classic(base_size = 22)
+xdensity
+# Marginal density plot of y (right panel)
+ydensity <- ggplot(datt, aes(x=pop2)) + 
+  geom_density(alpha=.5) + 
+  theme(legend.position = "none")+theme_classic(base_size = 22)
+ydensity
+dev.off() 
+
+
+sum(pop1>pop2)
+sum(pop1<pop2)
+
+> sum(pop1>pop2)
+[1] 2627
+> sum(pop1<pop2)
+[1] 2250
+
+```
+
+# Figure 5 C-H
+```R
+WTCCC bar plots
+
+
+numbers = c(62 ,30 ,68 ,	24 ,17 ,25 ,	25 ,
+0 ,	0 ,	1 ,	0	,0	,0,	0,
+18 ,	12 ,24 ,	11,	14 ,	14 ,	14 ,
+8 ,	5 ,	5 ,	1,	0	,2 ,	3,
+0	,0	,1, 	0,	0	,0,	0,
+0	,1,0	,0	,0,	0,	0)
+
+traits = c("T1D","T2D","RA","CD","CAD","BD")
+
+population = c("AA(bslmm)", "AA(elnet)","EA(bslmm)", "EA(elnet)","AFA","CAU","HIS")
+mat = matrix(numbers,7,6)
+colnames(mat) = traits
+rownames(mat) = population
+
+
+
+k=0
+
+k = k + 1
+counts = mat[,k]
+popu = rownames(mat)
+dat = data.frame(popu,counts )
+dat$popu = factor(dat$popu, levels=popu, order=T)
+
+pdf(paste0("WTCCC_barplot_",colnames(mat)[k],"_classic.pdf"),width=8,height=4)
+ggplot(data=dat, aes(x=popu, y=counts,fill = popu)) +
+#scale_fill_manual(values=c("#56B4E9", "honeydew2", "lightpink","lavender","sandybrown","palegreen","khaki"))+
+  geom_bar(stat="identity", position=position_dodge(),width = 0.8,alpha = 0.8)+
+  geom_text(aes(label=counts), vjust=1.6, color="black",
+            position = position_dodge(0.9), size=8)+
+  scale_fill_brewer(palette="Paired")+
+  theme_classic(base_size=18)+
+  theme(legend.position = "none")+
+  labs(title=paste0(colnames(mat)[k]),x="", y = "Count")
+dev.off()
+
+
+
+
+k=0
+
+k = k + 1
+counts = mat[,k]
+popu = rownames(mat)
+dat = data.frame(popu,counts )
+dat$popu = factor(dat$popu, levels=popu, order=T)
+
+pdf(paste0("WTCCC_barplot_",colnames(mat)[k],"_legend_classic.pdf"),width=8,height=4)
+ggplot(data=dat, aes(x=popu, y=counts,fill = popu)) +
+#scale_fill_manual(values=c("#56B4E9", "honeydew2", "lightpink","lavender","sandybrown","palegreen","khaki"))+
+  geom_bar(stat="identity", position=position_dodge(),width = 0.5)+
+  geom_text(aes(label=counts), vjust=1.6, color="black",
+            position = position_dodge(0.9), size=8)+
+  scale_fill_brewer(palette="Paired")+
+  theme_classic(base_size=18)+
+  theme(legend.position = "bottom")+
+  labs(title=paste0(colnames(mat)[k]),x="", y = "Count")
+dev.off()
+
+
+```
+
+
 
 # Figure S1: PCs vs eGene number and eSNP number
 ```R
