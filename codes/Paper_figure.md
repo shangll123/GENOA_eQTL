@@ -298,7 +298,7 @@ Fst = Fst_result$Fst
 Class = factor(Fst_result$TYPE,levels = c("non eSNPs","EA unique","AA unique","Common"),order=T)
 dat = data.frame(Fst,Class)
 library(ggplot2)
-tiff(paste0("/net/mulan/home/shanglu/GENOA/analysis/figure/Fig2D_Fst_update_order.tiff"), units="in", width=5, height=5, res=150)
+tiff(paste0("/net/mulan/home/shanglu/GENOA/analysis/figure/Fig2D_Fst_update_order.tiff"), units="in", width=5, height=5, res=300)
 ggplot(dat, aes(x=Class, y=Fst)) +
     geom_boxplot(alpha=0.5,fill="white") +
     ylim(0,1)+
